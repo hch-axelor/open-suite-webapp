@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  <form id="gst-invoice-form" name="invoice-form" title="Invoice" extension="true"
+    model="com.axelor.apps.account.db.Invoice">
+
+    <extend target="//field[@name='companyBankDetails']">
+      <insert position="before">
+        <field name="priority" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
+      </insert>
+    </extend>
+    <extend target="//field[@name='address']">
+      <attribute name="form-view" value="address-form" />
+    </extend>
+    <extend target="/">
+      <attribute name="onLoad"
+        value="action-account-invoice-onload-group,action-gst-invoice-onnew-method"/>
+    </extend>
+  </form>
+  <action-method name="action-gst-invoice-onnew-method" if-module="axelor-gst" >
+    <call class="com.axelor.apps.gst.web.InvoiceController" if="__config__.app.isApp('gst')" method="fillInvoiceLineData"/>
+  </action-method>
+
+</object-views>

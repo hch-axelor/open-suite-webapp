@@ -5,12 +5,37 @@
   <form id="gst-address-form" name="address-form" model="com.axelor.apps.base.db.Address"
     title="Address" extension="true">
 
-	<extend target="//field[@name='city']">
+    <extend target="//field[@name='city']">
       <insert position="after">
-        <field name="state"/>
+        <field if-module="axelor-gst" if="__config__.app.isApp('gst')" name="state" onSelect="action-address-attrs-update-domain-state"
+          onChange="action-address-record-clear-fields" form-view="state-form"
+          grid-view="state-grid" canEdit="false" colSpan="12"/>
       </insert>
-    </extend> 
+      <attribute name="onSelect" value="action-gst-address-attrs-update-domain-city" />
+    </extend>
+
+
+
   </form>
+
+
+  <action-attrs name="action-gst-address-attrs-update-domain-city" if-module="axelor-gst" >
+    <attribute name="domain"  if="(addressL7Country &amp;&amp; state) || zip "
+      expr="eval: (addressL7Country &amp;&amp; state ? &quot;self.country = :addressL7Country AND self.state = :state &quot; : &quot;&quot;) +        (addressL7Country &amp;&amp; zip ? &quot; AND &quot; : &quot;&quot;) + (zip ? &quot;self.zip LIKE '${zip + '%'}' &quot; : &quot;&quot;)"
+      for="city"/>
+
+    <attribute name="domain" if="!addressL7Country &amp;&amp; !state &amp;&amp; !zip"
+      expr="eval: null" for="city"/>
+  </action-attrs>
+
+  <action-attrs name="action-address-attrs-update-domain-state" if-module="axelor-gst">
+    <attribute name="domain" if="addressL7Country"
+      expr="eval: (addressL7Country ? &quot;self.country = :addressL7Country&quot; : &quot;&quot;)"
+      for="state"/>
+    <attribute name="domain" if="!addressL7Country" expr="eval: null" for="state"/>
+
+
+  </action-attrs>
 
 
 </object-views>

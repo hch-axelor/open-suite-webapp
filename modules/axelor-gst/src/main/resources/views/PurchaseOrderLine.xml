@@ -3,12 +3,14 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
-  <form id="gst-invoice-line-form" name="invoice-line-form" title="InvoiceLine"
-    extension="true" model="com.axelor.apps.account.db.InvoiceLine">
 
-    <extend target="//field[@name='exTaxTotal']">
+  <form id="gst-purchase-order-line-form" name="purchase-order-line-form"
+    title="PurchaseOrderLine" extension="true" model="com.axelor.apps.purchase.db.PurchaseOrderLine">
+
+
+    <extend
+      target="panel-tabs[@name='mainPanelTab']/panel[@name='informationsPanel']/field[@name='exTaxTotal']">
       <insert position="before">
-      	
         <field name="gstRate" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
         <field name="igst" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
         <field name="sgst" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
@@ -17,13 +19,19 @@
 
     </extend>
 
+    <!-- panel-tabs[@name='mainPanelTab']//field[@name='productName'] -->
     <!-- panel-tabs[@name='mainPanelTab']/panel[@name='informationsPanel']/field[@name='productName'] -->
-    <extend target="panel-tabs[@name='mainPanelTab']//field[@name='productName']">
+    <extend
+      target="panel-tabs[@name='mainPanelTab']/panel[@name='informationsPanel']/panel[@name='orderDetailsPanel']">
       <insert position="after">
-        <field name="hsbn" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
+        <panel name="hsbnDetails" if-module="axelor-gst" if="__config__.app.isApp('gst')">
+          <field name="hsbn"/>
+
+        </panel>
       </insert>
     </extend>
 
   </form>
-  
+
+
 </object-views>

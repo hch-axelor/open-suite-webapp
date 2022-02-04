@@ -5,7 +5,7 @@
 	http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
   <module name="base" package="com.axelor.apps.base.db"/>
   <entity name="ProductCategory">
-    <decimal name="gstRate" title="GST Rate" default="0.00" />
+    <decimal name="gstRate" title="GST Rate" default="0.00"/>
 
   </entity>
 

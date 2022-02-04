@@ -2,23 +2,35 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
-	<form id="gst-product-form" model="com.axelor.apps.base.db.Product" title="Product"
-		name="product-form" extension="true" >
-		
-		<extend target="//field[@name='managPriceCoef']">
-			<insert position="after" >
-				<field name="gstRate" />
-			</insert>
-			
-		</extend>	 
-		<extend target="//panel[@name='BarcodePanel']">
-			<insert position="after">
-				<panel name="hsbnPanel" title="HSBN Detail" >
-					<field name="hsbn" colSpan="6" />
-				</panel>
-			</insert>
-			<attribute name="colSpan" value="6"/>
-		</extend>
-		
-	</form>
+  <form id="gst-product-form" model="com.axelor.apps.base.db.Product" title="Product"
+    name="product-form" extension="true">
+
+    <extend target="//field[@name='managPriceCoef']">
+      <insert position="after">
+        <field name="gstRate" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
+      </insert>
+
+    </extend>
+    <extend target="//panel[@name='BarcodePanel']">
+      <insert position="after">
+        <panel name="hsbnPanel" title="HSBN Detail" if-module="axelor-gst" if="__config__.app.isApp('gst')" >
+          <field name="hsbn" colSpan="6"/>
+        </panel>
+      </insert>
+      <attribute name="colSpan" value="6"/>
+    </extend>
+    <extend target="//field[@name='productCategory']">
+      <attribute name="onChange" value="action-product-category-onchange"/>
+    </extend>
+    <extend target="/">
+      <attribute name="onLoad" value="action-product-category-onchange"/>
+    </extend>
+
+  </form>
+
+  <action-record name="action-product-category-onchange"
+    model="com.axelor.apps.base.db.Product" if-module="axelor-gst">
+    <field name="gstRate" expr="eval:productCategory.gstRate" if="__config__.app.isApp('gst')"/>
+  </action-record>
+
 </object-views>

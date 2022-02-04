@@ -3,13 +3,13 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
 
-  <module name="base" package="com.axelor.apps.base.db"/>
-  <entity name="Product">
+  <module name="stock" package="com.axelor.apps.stock.db"/>
+
+  <entity name="StockMoveLine" lang="java">
     <string name="hsbn" title="HSBN"/>
     <decimal name="gstRate" title="GST Rate" readonly="true"/>
-
+    <decimal name="igst" title="IGST" readonly="true"/>
+    <decimal name="sgst" title="SGST" readonly="true"/>
+    <decimal name="cgst" title="CGST" readonly="true"/>
   </entity>
-
-
-
 </domain-models>

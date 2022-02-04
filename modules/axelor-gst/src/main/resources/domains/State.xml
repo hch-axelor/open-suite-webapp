@@ -7,7 +7,8 @@
   <module name="gst" package="com.axelor.apps.gst.db"/>
   <entity name="State">
     <string name="name" title="Name" required="true"/>
-    <string name="country" title="Country" required="true"/>
+    <many-to-one ref="com.axelor.apps.base.db.Country" name="country" title="Country"
+      required="true"/>
 
   </entity>
 

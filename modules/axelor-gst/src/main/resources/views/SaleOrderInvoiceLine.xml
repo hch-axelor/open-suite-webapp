@@ -3,16 +3,21 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
-  <form id="gst-invoice-line-form" name="invoice-line-form" title="InvoiceLine"
-    extension="true" model="com.axelor.apps.account.db.InvoiceLine">
+
+  <form id="gst-sale-order-invoice-line-form" name="sale-order-line-form"
+    title="SaleOrderInvoiceLine" extension="true" model="com.axelor.apps.sale.db.SaleOrderLine">
+
 
     <extend target="//field[@name='exTaxTotal']">
       <insert position="before">
+      	<panel name="gstDetails" if-module="axelor-gst"  if="__config__.app.isApp('gst')">
       	
-        <field name="gstRate" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
-        <field name="igst" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
-        <field name="sgst" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
-        <field name="cgst" if-module="axelor-gst" if="__config__.app.isApp('gst')"/>
+	        <field name="gstRate" />
+	        <field name="igst"/>
+	        <field name="sgst"/>
+	        <field name="cgst"/>
+      	
+      	</panel>
       </insert>
 
     </extend>
@@ -25,5 +30,6 @@
     </extend>
 
   </form>
-  
+
+
 </object-views>
