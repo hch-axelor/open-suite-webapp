@@ -27,6 +27,7 @@
     <attribute name="domain" if="!addressL7Country &amp;&amp; !state &amp;&amp; !zip"
       expr="eval: null" for="city"/>
   </action-attrs>
+  
 
   <action-attrs name="action-address-attrs-update-domain-state" if-module="axelor-gst">
     <attribute name="domain" if="addressL7Country"
